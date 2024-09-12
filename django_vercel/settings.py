@@ -27,13 +27,13 @@ SECRET_KEY = 'django-insecure-$hn-v+#o^w898cod^j#760mi&4p6yyyg*tv)ed(+odk#@6ah*j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+# allow Vercel
+ALLOWED_HOSTS = [".vercel.app", "*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +46,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,12 +78,26 @@ WSGI_APPLICATION = 'django_vercel.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+HOST = 1    # 0=Local | 1=Vercel
+
+if HOST == 0:   # SQLite Db
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:   # Postgres Db
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'railway',
+            'USER': 'postgres',
+            'PASSWORD': 'qYZKsPtUMmbIODsgSXoxuaeYXvofqSnJ',
+            'HOST': 'postgres.railway.internal',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
