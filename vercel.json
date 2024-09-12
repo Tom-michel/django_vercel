@@ -19,10 +19,5 @@
     "api/*.py": {
       "runtime": "python3.11.3"
     }
-  },
-  "hooks": {
-    "post-deploy": {
-      "command": "python manage.py migrate"
-    }
   }
 }
