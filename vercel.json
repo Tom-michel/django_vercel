@@ -7,13 +7,6 @@
         "maxLambdaSize": "15mb",
         "runtime": "python3.11.3"
       }
-    },
-    {
-      "src": "build.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles_build"
-      }
     }
   ],
   "routes": [
@@ -21,5 +14,15 @@
       "src": "/(.*)",
       "dest": "django_vercel/wsgi.py"
     }
-  ]
+  ],
+  "functions": {
+    "api/*.py": {
+      "runtime": "python3.11.3"
+    }
+  },
+  "hooks": {
+    "post-deploy": {
+      "command": "python manage.py migrate"
+    }
+  }
 }

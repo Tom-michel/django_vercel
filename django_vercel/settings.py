@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'django_vercel.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-HOST = 0    # 0=Local | 1=Vercel
+HOST = 1    # 0=Local | 1=Vercel
 
 if HOST == 0:   # SQLite Db
     DATABASES = {
